@@ -6,7 +6,7 @@ The graph represents a road network around the New York area, with nodes and rel
 
 ### Nodes:
 - `:City` Start/end points (e.g., CityA, CityB).
-- `:ChargingStation`` Charging points with power_kw (e.g., CS3 at 350 kW).
+- `:ChargingStation` Charging points with power_kw (e.g., CS3 at 350 kW).
 - `:OP` Operational waypoints.
 - `:POI` Points of interest (e.g., museums, monuments).
 - `:Car` Vehicles with `battery_capacity_kwh`, `efficiency_kwh_per_km`, and `current_soc_percent`.
@@ -179,4 +179,6 @@ WITH p, c, reduce(current = {soc: c.current_soc_percent, time_in_min: 0.0},
   END) AS final_values
 RETURN c, p, final_values ORDER BY final_values.time_in_min ASC LIMIT 1
 ```
+
+<img width="1150" height="861" alt="viz_ev_routing" src="https://github.com/user-attachments/assets/3dd2726c-96c7-4c75-9939-139045f61673" />
 
