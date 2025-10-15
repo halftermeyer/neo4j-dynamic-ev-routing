@@ -142,7 +142,7 @@ The target query finds the fastest path for Car5 from CityA to CityB, ensuring:
 - Each visited nodes `x` satisfies the detour ratio: `dist(x, b) < 1.5 * dist(a, b)`.
 
 ```cypher
-CYPHER 25
+CYPHER 25 runtime=parallel
 // route from source to target with car
 // max_mins is the maximum allowed time in minutes
 // detour_ratio defines how much further that the source you're allowed to be from the target
@@ -150,7 +150,7 @@ CYPHER 25
 MATCH (c:Car {id: $car_id})
 MATCH REPEATABLE ELEMENTS p = (a:Geo {name: $source_geo_name})(()-[rels:ROAD|CHARGE]-(x:Geo
   WHERE point.distance(x.geo, b.geo) < $detour_ratio * point.distance(a.geo, b.geo)
-)){1,10}(b:Geo {name: $target_geo_name})
+)){1,12}(b:Geo {name: $target_geo_name})
 WHERE allReduce(
   current = {soc: c.current_soc_percent, time_in_min: 0.0},
   r IN rels |
@@ -180,6 +180,7 @@ WITH p, c, reduce(current = {soc: c.current_soc_percent, time_in_min: 0.0},
 RETURN c, p, final_values
 ORDER BY final_values.time_in_min ASC, size(relationships(p)) ASC
 LIMIT 1
+ 
 ```
 
 <img width="1150" height="861" alt="viz_ev_routing" src="https://github.com/user-attachments/assets/3dd2726c-96c7-4c75-9939-139045f61673" />
