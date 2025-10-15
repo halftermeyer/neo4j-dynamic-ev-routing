@@ -177,7 +177,9 @@ WITH p, c, reduce(current = {soc: c.current_soc_percent, time_in_min: 0.0},
       THEN {soc: current.soc + (r.power_kw*(r.time_in_minutes/60.0)*100) / c.battery_capacity_kwh,
           time_in_min: current.time_in_min + r.time_in_minutes}
   END) AS final_values
-RETURN c, p, final_values ORDER BY final_values.time_in_min ASC LIMIT 1
+RETURN c, p, final_values
+ORDER BY final_values.time_in_min ASC, size(relationships(p)) ASC
+LIMIT 1
 ```
 
 <img width="1150" height="861" alt="viz_ev_routing" src="https://github.com/user-attachments/assets/3dd2726c-96c7-4c75-9939-139045f61673" />
