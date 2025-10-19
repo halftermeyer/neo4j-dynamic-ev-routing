@@ -2,7 +2,7 @@
 
 ## Data
 
-
+Copy and paste the full [ingestion script](EV_ingestion_script.cypher) in Query to load a test dataset.
 
 ## Data Model
 Imagine a graph where (:Geo) nodes represent intersections, cities, or charging stations.
