@@ -1,5 +1,7 @@
 # 🗺️ Use Case: Electric-Vehicle Routing
 
+The goal: Find a route from source to target that respects time and energy constraints, and minimizes energy use.
+
 ## Data
 
 Copy and paste the full [ingestion script](EV_ingestion_script.cypher) in Query to load a test dataset.
