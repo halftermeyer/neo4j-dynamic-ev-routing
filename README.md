@@ -1,5 +1,9 @@
 # 🗺️ Use Case: Electric-Vehicle Routing
 
+## Data
+
+
+
 ## Data Model
 Imagine a graph where (:Geo) nodes represent intersections, cities, or charging stations.
 Some (:Geo) nodes are also labeled (:ChargingStation).
