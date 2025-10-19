@@ -5,7 +5,8 @@
 Copy and paste the full [ingestion script](EV_ingestion_script.cypher) in Query to load a test dataset.
 
 ## Data Model
-Imagine a graph where `(:Geo)` nodes represent intersections, cities, or charging stations.
+
+We've just loaded a graph where `(:Geo)` nodes represent intersections, cities, or charging stations.
 Some (:Geo) nodes are also labeled `(:ChargingStation)`.
 Connections include:
 * `:ROAD` relationships between :Geo nodes, with properties like distance_km, speed_limit_kph, and hourly_expected_speed_kph (a list of 24 hourly expected mean speed assuming a 24-hour wrap-around for simplicity)
