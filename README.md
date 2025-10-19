@@ -48,7 +48,7 @@ MATCH REPEATABLE ELEMENTS p = (a:Geo {name: $source_geo_name})
      // Spatial pruning to avoid excessive detours
      WHERE point.distance(x.geo, b.geo) < $detour_ratio * point.distance(a.geo, b.geo)
      AND point.distance(x.geo, a.geo) < $detour_ratio * point.distance(a.geo, b.geo)
-  )){1,1000}
+  )){1,20}
   (b:Geo {name: $target_geo_name})
 
 // COMPUTE CURRENT STATE AND PRUNE
