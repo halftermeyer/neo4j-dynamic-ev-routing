@@ -21,7 +21,7 @@ Connections include:
 
 ``` cypher
 :params {
-  max_mins: 10000,
+  max_mins: 1000,
   car_id: "Car7",
   source_geo_name: "Nice",
   target_geo_name: "Le Havre",
