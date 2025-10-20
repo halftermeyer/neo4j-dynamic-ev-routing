@@ -28,6 +28,7 @@ CREATE (cs1:ChargingStation {lat: 48.7566, lon: 2.4522, id: 'CS1', name: 'CS1', 
 
 CREATE (c1:Car {id: 'Car5', battery_capacity_kwh: 56, efficiency_kwh_per_km: 0.19, current_soc_percent: 39});
 CREATE (c2:Car {id: 'Car6', battery_capacity_kwh: 100, efficiency_kwh_per_km: 0.1, current_soc_percent: 75});
+CREATE (c2:Car {id: 'Car7', battery_capacity_kwh: 100, efficiency_kwh_per_km: 0.07, current_soc_percent: 50});
 
 MATCH (a:City {name: 'Paris'}), (b:ChargingStation {id: 'CS1'}) CREATE (a)-[:ROAD {distance_km: 10.0, speed_limit_kph: 50}]->(b);
 MATCH (a:City {name: 'Paris'}), (b:City {name: 'Lyon'}) CREATE (a)-[:ROAD {distance_km: 460.0, speed_limit_kph: 110}]->(b);
@@ -54,24 +55,22 @@ MATCH (a:City {name: 'Reims'}), (b:City {name: 'Paris'}) CREATE (a)-[:ROAD {dist
 MATCH (a:City {name: 'Grenoble'}), (b:City {name: 'Lyon'}) CREATE (a)-[:ROAD {distance_km: 100.0, speed_limit_kph: 100}]->(b);
 MATCH (a:City {name: 'Dijon'}), (b:City {name: 'Strasbourg'}) CREATE (a)-[:ROAD {distance_km: 300.0, speed_limit_kph: 110}]->(b);
 MATCH (a:City {name: 'Le Havre'}), (b:City {name: 'Lille'}) CREATE (a)-[:ROAD {distance_km: 230.0, speed_limit_kph: 110}]->(b);
-MATCH (a:ChargingStation {id: 'CS1'}), (b:ChargingStation {id: 'CS2'}) CREATE (a)-[:ROAD {distance_km: 450.0, speed_limit_kph: 110}]->(b);
-MATCH (a:ChargingStation {id: 'CS3'}), (b:ChargingStation {id: 'CS4'}) CREATE (a)-[:ROAD {distance_km: 600.0, speed_limit_kph: 120}]->(b);
-MATCH (a:ChargingStation {id: 'CS5'}), (b:ChargingStation {id: 'CS6'}) CREATE (a)-[:ROAD {distance_km: 400.0, speed_limit_kph: 110}]->(b);
-MATCH (a:ChargingStation {id: 'CS7'}), (b:ChargingStation {id: 'CS8'}) CREATE (a)-[:ROAD {distance_km: 500.0, speed_limit_kph: 110}]->(b);
-MATCH (a:ChargingStation {id: 'CS9'}), (b:ChargingStation {id: 'CS10'}) CREATE (a)-[:ROAD {distance_km: 700.0, speed_limit_kph: 120}]->(b);
 
 // create geo point
 MATCH (x: ChargingStation|City)
 SET x.geo = point({longitude:x.lon, latitude:x.lat}), x:Geo;
+
 // create geo index
 CREATE POINT INDEX point_index_geo
 IF NOT EXISTS
 FOR (n:Geo) ON (n.geo);
 
+// create charging loops (5 and 15 minutes)
 MATCH (cs:ChargingStation)
-MERGE (cs)-[:CHARGE {station_id:cs.id, power_kw: cs.power_kw, time_in_minutes: 15}]->(cs)
-MERGE (cs)-[:CHARGE {station_id:cs.id, power_kw: cs.power_kw, time_in_minutes: 30}]->(cs);
+MERGE (cs)-[:CHARGE {station_id:cs.id, power_kw: cs.power_kw, time_in_minutes: 5}]->(cs)
+MERGE (cs)-[:CHARGE {station_id:cs.id, power_kw: cs.power_kw, time_in_minutes: 15}]->(cs);
 
+// create max speed expected hourly time
 MATCH ()-[r:ROAD]-()
 SET r.hourly_expected_speed_kph = 
   [h IN range(0,23) | r.speed_limit_kph];
