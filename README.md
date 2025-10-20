@@ -23,8 +23,8 @@ Connections include:
 :params {
   max_mins: 1000,
   car_id: "Car7",
-  source_geo_name: "Nice",
-  target_geo_name: "Le Havre",
+  source_geo_name: "Le Havre",
+  target_geo_name: "Nice",
   detour_ratio: 1.2,
   min_soc: 1,
   max_soc: 100,
@@ -48,7 +48,7 @@ MATCH REPEATABLE ELEMENTS p = (a:Geo {name: $source_geo_name})
      // Spatial pruning to avoid excessive detours
      WHERE point.distance(x.geo, b.geo) < $detour_ratio * point.distance(a.geo, b.geo)
      AND point.distance(x.geo, a.geo) < $detour_ratio * point.distance(a.geo, b.geo)
-  )){1,20}
+  )){1,15}
   (b:Geo {name: $target_geo_name})
 
 // COMPUTE CURRENT STATE AND PRUNE
@@ -105,6 +105,7 @@ ORDER BY final_values.time_in_min ASC,
 LIMIT 1
 
 ```
+<img width="1547" height="841" alt="Capture d’écran 2025-10-20 à 15 25 42" src="https://github.com/user-attachments/assets/53c9bd53-97e3-4dd1-90df-43f5569dfe48" />
 
-<img width="800" height="594" alt="1_IkUUMyOH6cHZoCDA5Bvx2w" src="https://github.com/user-attachments/assets/6e52cc80-d167-4bb9-badc-41be00323a99" />
+
 
