@@ -12,7 +12,7 @@ We've just loaded a graph where `(:Geo)` nodes represent intersections, cities, 
 Some (:Geo) nodes are also labeled `(:ChargingStation)`.
 Connections include:
 * `:ROAD` relationships between :Geo nodes, with properties like distance_km, speed_limit_kph, and hourly_expected_speed_kph (a list of 24 hourly expected mean speed assuming a 24-hour wrap-around for simplicity)
-* `:CHARGE` self-loops on :ChargingStation nodes, with power_kw and time_in_minutes. In the examples dataset, a charging station has two loops L15 and L30 of 15 and 30 minutes. To charge 75 minutes at station `cs`, you need to match `(cs:ChargingStation)-[L30]->(cs)-[L30]->(cs)-[L15]->(cs)`
+* `:CHARGE` self-loops on :ChargingStation nodes, with power_kw and time_in_minutes. In the examples dataset, a charging station has two loops L5 and L15 of 5 and 15 minutes. To charge 20 minutes at station `cs`, you need to match `(cs:ChargingStation)-[L15]->(cs)-[L5]->(cs)`
 * A `(:Car)` node with `battery_capacity_kwh`, `efficiency_kwh_per_km`, and `current_soc_percent`.
 
 <img width="800" height="610" alt="1_Z80JDMU2eE3qRbCoRc0pxQ" src="https://github.com/user-attachments/assets/c5fb9c39-7278-4efc-bfc8-c7c3b1b2780a" />
@@ -22,7 +22,7 @@ Connections include:
 ``` cypher
 :params {
   max_mins: 10000,
-  car_id: "Car6",
+  car_id: "Car7",
   source_geo_name: "Nice",
   target_geo_name: "Le Havre",
   detour_ratio: 1.2,
